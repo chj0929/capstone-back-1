@@ -17,7 +17,7 @@ def hello_world():
 if __name__ == '__main__':
   # db
   load_dotenv(verbose=True)
-  engine = create_engine(f'mysql+pymysql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@127.0.0.1/{os.getenv("DB_NAME")}')
+  engine = create_engine(f'mysql+pymysql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST")}/{os.getenv("DB_NAME")}')
   connection = engine.connect()
 
   result = connection.execute("SHOW TABLES;")

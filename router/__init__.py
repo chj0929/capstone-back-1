@@ -27,6 +27,7 @@ def create_endpoints(app):
     # result = json.loads(df.to_json())
     # print(result)
 
+    # 쿼리 실행 전에 insert로 가짜 데이터 넣기
     result = queryset[0]
 
     if result is None:

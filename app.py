@@ -24,6 +24,7 @@ def create_app():
   app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
   app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+  app.secret_key = os.getenv('SECRET_KEY')
 
   # 스키마 가져오기 + router 에서 사용하기 위해
   db.init_app(app)

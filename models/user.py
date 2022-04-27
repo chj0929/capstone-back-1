@@ -4,8 +4,9 @@ class User(db.Model):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  name = db.Column(db.String(30))
-
+  email = db.Column(db.String(30))
+  password = db.Column(db.String(100))
+  nickname = db.Column(db.String(30))
   # comment = db.relationship('Comment', backref='user')
 
   def serialize(self):

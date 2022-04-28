@@ -6,12 +6,12 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-
 # 전체 구조 참고 : https://wikidocs.net/book/4542
 
-PORT=5000
+PORT = 5000
 db = SQLAlchemy()
 migrate = Migrate()
+
 
 def create_app():
   app = Flask(__name__)
@@ -35,14 +35,8 @@ def create_app():
 
   CORS(app)
 
-  #view
+  # view
   from views import create_endpoints
   create_endpoints(app)
 
   return app
-
-
-
-
-
-

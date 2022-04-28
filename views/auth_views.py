@@ -59,6 +59,7 @@ def login():
     return '로그인 실패', 401
 
 
+
 @bp.route('/logout/')
 def logout():
     session.clear()

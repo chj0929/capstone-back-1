@@ -7,6 +7,8 @@ class User(db.Model):
   email = db.Column(db.String(30))
   password = db.Column(db.String(100))
   nickname = db.Column(db.String(30))
+  user_class = db.Column(db.String(10))
+
   # comment = db.relationship('Comment', backref='user')
 
   def serialize(self):

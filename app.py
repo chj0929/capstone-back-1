@@ -19,6 +19,7 @@ def create_app():
   # db
   load_dotenv(verbose=True)  # 환경 변수 세팅(.env)
   db_uri = f'mysql+pymysql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST")}/{os.getenv("DB_NAME")}'
+
   # 추가 세팅
   # 참고 : https://programmers-sosin.tistory.com/entry/Flask-Flask%EC%97%90%EC%84%9C-SQLAlchemy-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-Flask-ORM
   app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
@@ -33,7 +34,10 @@ def create_app():
 
   ######################################################
 
-  CORS(app)
+  # TODO: dev/prod 분기 처리
+  # 참고 : https://velog.io/@sage_y/CORS-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D-%EC%8B%9C-%ED%95%B4%EA%B2%B0%EC%B1%85
+  # CORS(app, supports_credentials=True, origins="*")
+  CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
   # view
   from views import create_endpoints

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, Response
 
 from models.user import User
 from utils.auth import login_required
@@ -10,7 +10,6 @@ bp = Blueprint('user', __name__, url_prefix='/user')
 @bp.get('/')
 @login_required
 def get_my_info():
-  print('내 정보 [세션]')
   print(request.cookies.get('session'))
   return 'ok'
 
@@ -20,7 +19,7 @@ def get_all_users():
   queryset = User.query.all()
 
   if not len(queryset):
-    return ''
+    return Response(status=404)
   return jsonify([r.serialize() for r in queryset])
 
 
@@ -28,3 +27,4 @@ def get_all_users():
 def get_user_info(user_id):
   print(user_id)
   return 'get_user_info'
+

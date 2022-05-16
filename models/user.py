@@ -9,7 +9,10 @@ class User(db.Model):
   nickname = db.Column(db.String(30))
   user_class = db.Column(db.String(10), default="user")
 
-  posts = db.relationship('Post', backref='user', lazy=True)
+  reviews = db.relationship('Review', backref='user', lazy=True)
+  likeslogs = db.relationship('Likeslog', backref='user', lazy=True)
+
+  # posts = db.relationship('Post', backref='user', lazy=True)
 
   def serialize(self):
     return {

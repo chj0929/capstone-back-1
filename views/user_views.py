@@ -12,7 +12,7 @@ bp = Blueprint('user', __name__, url_prefix='/user')
 def get_my_info():
   print('내 정보 [세션]')
   print(request.cookies.get('session'))
-  return 'Hello, Pybo!'
+  return 'ok'
 
 
 @bp.route('/users')

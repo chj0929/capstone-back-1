@@ -5,21 +5,17 @@ import bcrypt
 
 from app import db
 from models.user import User
-from utils.auth import login_required
+from utils.auth import login_required, not_login_required
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 @bp.post('/signup')
+@not_login_required
 def signup():
-  res_dict = request.args.to_dict()
-  print('------------')
-  print(res_dict)
-  print('------------')
+  res_dict = request.json
 
   if res_dict.get('email') and res_dict.get('password') and res_dict.get('nickname'):
-    # TODO: post 메소드로 수정
-
     print(res_dict.get('pw'))
 
     # gensalt 기본값 10 높아질수록 검증 시간 늘어남.
@@ -34,6 +30,7 @@ def signup():
 
 
 @bp.post('/login')
+@not_login_required
 def login():
   credential = request.json
   email = credential['email']
@@ -46,6 +43,8 @@ def login():
   # if res_dict.get('email') and res_dict.get('password'):
   if email != '' and password != '':
     user = User.query.filter_by(email=email).first()
+
+    #
 
     if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
       print('로그인 성공')
@@ -63,4 +62,4 @@ def login():
 @login_required
 def logout():
     session.clear()
-    return '로그아웃 성공'
+    return 'logout success'

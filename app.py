@@ -5,20 +5,31 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_seeder import FlaskSeeder
 
 # 전체 구조 참고 : https://wikidocs.net/book/4542
 
 PORT = 5000
 db = SQLAlchemy()
 migrate = Migrate()
+seeder = FlaskSeeder()
 
 
 def create_app():
   app = Flask(__name__)
 
+
   # db
   load_dotenv(verbose=True)  # 환경 변수 세팅(.env)
-  db_uri = f'mysql+pymysql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST")}/{os.getenv("DB_NAME")}'
+  db_uri = None
+  print("ENVIRONMENT  ::  ", os.getenv("PYTHON_ENV"))
+  if os.getenv("PYTHON_ENV") != 'production':
+    # 개발 환경
+    db_uri = f'mysql+pymysql://{os.getenv("DB_USER")}:{os.getenv("DB_PASSWORD")}@{os.getenv("DB_HOST")}/{os.getenv("DB_NAME")}'
+  else:
+    # production
+    db_uri = f'mysql+pymysql://{os.getenv("AWS_DB_USER")}:{os.getenv("AWS_DB_PASSWORD")}@{os.getenv("AWS_DB_HOST")}/{os.getenv("AWS_DB_NAME")}'
+
 
   # 추가 세팅
   # 참고 : https://programmers-sosin.tistory.com/entry/Flask-Flask%EC%97%90%EC%84%9C-SQLAlchemy-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-Flask-ORM
@@ -30,6 +41,7 @@ def create_app():
   # 스키마 가져오기 + router 에서 사용하기 위해
   db.init_app(app)
   migrate.init_app(app, db)
+  seeder.init_app(app, db)
   import models
 
   ######################################################
@@ -44,3 +56,5 @@ def create_app():
   create_endpoints(app)
 
   return app
+
+

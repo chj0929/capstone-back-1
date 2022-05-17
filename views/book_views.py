@@ -68,10 +68,12 @@ def register_new_book():
   #   publisher=publisher,
   # )
 
+  return 'register_new_book'
+
 # TODO: 수정 엔드포이트 추가
 
 @bp.delete('/<int:book_isbn>')
-def delete_new_book(book_isbn):
+def delete_book(book_isbn):
   result = Book.query.filter_by(isbn=book_isbn).first()
   if result is None:
     return Response(status=404)

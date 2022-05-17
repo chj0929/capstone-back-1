@@ -28,3 +28,7 @@ def get_user_info(user_id):
   print(user_id)
   return 'get_user_info'
 
+
+# #TODO: 내 정보 수정 추가
+# @bp.update()
+

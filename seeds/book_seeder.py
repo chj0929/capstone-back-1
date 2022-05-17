@@ -25,6 +25,7 @@ class BookSeeder(Seeder):
         "info": "",
         "average": round(random.uniform(0.0, 5.0), 1),
         "count": 0,
+        "publisher": generator.Name(),
         "list_price": round(random.randrange(20000, 25000),-2),
         "price": round(random.randrange(10000, 19000),-2),
         "page": random.randrange(100, 200),
